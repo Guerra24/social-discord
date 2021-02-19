@@ -354,19 +354,24 @@ public class SocialDiscord {
 			String path = inner.child(0).attr("href");
 			if (!(path.startsWith("/story.php") || path.startsWith("/" + page + "/photos/")))
 				continue;
-			System.out.println(path);
-			int start = path.indexOf("mf_story_key");
+			String postId;
+			int start = path.indexOf("story_fbid");
 			if (start == -1) {
-				try {
-					System.out.println("Waiting for post id");
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
+				start = path.indexOf("mf_story_key");
+				if (start == -1) {
+					try {
+						System.out.println("Waiting for post id");
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+					}
+					handleHTML();
+					return;
 				}
-				handleHTML();
-				return;
+				start += path.substring(start).indexOf(".") + 1;
+				postId = path.substring(start, start + path.substring(start).indexOf("%3"));
+			} else {
+				postId = path.substring(path.indexOf("=") + 1, path.indexOf("&id"));
 			}
-			start += path.substring(start).indexOf(".") + 1;
-			String postId = path.substring(start, start + path.substring(start).indexOf("%3"));
 			if (ids.stream().anyMatch(str -> str.trim().equals(postId.trim())))
 				continue;
 			processArticle(path, postId);
