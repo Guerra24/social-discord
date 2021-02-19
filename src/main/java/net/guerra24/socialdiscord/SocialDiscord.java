@@ -207,10 +207,10 @@ public class SocialDiscord {
 		if (ids.stream().anyMatch(str -> str.trim().equals(postId.trim())))
 			return;
 		System.out.println("Sending post: " + postId);
-		
+
 		String post = "";
 		List<String> imagesPath = new ArrayList<>();
-		
+
 		if (path.startsWith("/story.php")) {
 			Element story = doc.getElementById("m_story_permalink_view");
 
@@ -243,7 +243,6 @@ public class SocialDiscord {
 		String linkPath = "";
 
 		post = cleanText(post);
-
 
 		// Handle fucking emojis
 		/*
@@ -355,7 +354,17 @@ public class SocialDiscord {
 			String path = inner.child(0).attr("href");
 			if (!(path.startsWith("/story.php") || path.startsWith("/" + page + "/photos/")))
 				continue;
+			System.out.println(path);
 			int start = path.indexOf("mf_story_key");
+			if (start == -1) {
+				try {
+					System.out.println("Waiting for post id");
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+				}
+				handleHTML();
+				return;
+			}
 			start += path.substring(start).indexOf(".") + 1;
 			String postId = path.substring(start, start + path.substring(start).indexOf("%3"));
 			if (ids.stream().anyMatch(str -> str.trim().equals(postId.trim())))
@@ -408,6 +417,7 @@ public class SocialDiscord {
 		try (BufferedReader br = new BufferedReader(new FileReader(new File(BASE_PATH + "report.txt")))) {
 			reportHook = br.lines().reduce("", String::concat);
 		} catch (Exception e) {
+			System.out.println("Report hook mising, disabling");
 		}
 		loadHooksFile();
 		loadFile();
