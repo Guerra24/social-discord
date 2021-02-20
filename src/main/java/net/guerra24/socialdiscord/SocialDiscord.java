@@ -355,30 +355,18 @@ public class SocialDiscord {
 			if (!(path.startsWith("/story.php") || path.startsWith("/" + page + "/photos/")))
 				continue;
 			String postId;
-			int start = path.indexOf("story_fbid");
+			int start = path.indexOf("mf_story_key");
 			if (start == -1) {
-				start = path.indexOf("mf_story_key");
-				if (start == -1) {
-					try {
-						System.out.println("Waiting for post id");
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-					}
-					handleHTML();
-					return;
+				try {
+					System.out.println("Waiting for post id");
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
 				}
-				start += path.substring(start).indexOf(".") + 1;
-				postId = path.substring(start, start + path.substring(start).indexOf("%3"));
-			} else {
-				int start2 = path.substring(start).indexOf("=");
-				if (start2 == -1)
-					start2 = path.substring(start).indexOf(".");
-				start += start2 + 1;
-				int end = path.substring(start).indexOf("&id");
-				if (end == -1)
-					end = path.substring(start).indexOf("%3");
-				postId = path.substring(start, start + end);
+				handleHTML();
+				return;
 			}
+			start += path.substring(start).indexOf(".") + 1;
+			postId = path.substring(start, start + path.substring(start).indexOf("%3"));
 			if (ids.stream().anyMatch(str -> str.trim().equals(postId.trim())))
 				continue;
 			processArticle(path, postId);
