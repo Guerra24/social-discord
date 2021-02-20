@@ -370,11 +370,14 @@ public class SocialDiscord {
 				start += path.substring(start).indexOf(".") + 1;
 				postId = path.substring(start, start + path.substring(start).indexOf("%3"));
 			} else {
-				start += path.substring(start).indexOf(".") + 1;
+				int start2 = path.substring(start).indexOf("=");
+				if (start2 == -1)
+					start2 = path.substring(start).indexOf(".");
+				start += start2 + 1;
 				int end = path.substring(start).indexOf("&id");
-				if(end == -1)
+				if (end == -1)
 					end = path.substring(start).indexOf("%3");
-				postId = path.substring(start,start +  end);
+				postId = path.substring(start, start + end);
 			}
 			if (ids.stream().anyMatch(str -> str.trim().equals(postId.trim())))
 				continue;
