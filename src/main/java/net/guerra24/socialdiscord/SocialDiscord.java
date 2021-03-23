@@ -153,6 +153,7 @@ public class SocialDiscord {
 		post = post.replace("<br>", "\\n");
 		post = post.replace("</p>", "\\n");
 		post = post.replace("\"", "\\\"");
+		post = post.replace("*", "\\*");
 		while (true) {
 			if (post.indexOf("<") == -1)
 				break;
@@ -351,6 +352,8 @@ public class SocialDiscord {
 		Elements articles = recent.child(0).child(0).children();
 		for (Element article : articles) {
 			Element inner = article.child(1).child(1);
+			if (inner.childrenSize() == 0)
+				continue;
 			String path = inner.child(0).attr("href");
 			if (!(path.startsWith("/story.php") || path.startsWith("/" + page + "/photos/")))
 				continue;
