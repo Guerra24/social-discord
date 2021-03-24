@@ -1,9 +1,27 @@
-apply plugin: 'java-library'
-apply plugin: 'application'
+import org.gradle.internal.os.OperatingSystem
+
+plugins {
+	id 'java-library'
+	id 'application'
+	id "com.palantir.graal" version "0.7.2"
+}
 
 mainClassName = 'net.guerra24.socialdiscord.SocialDiscord'
 applicationDefaultJvmArgs = ["-Xmx32M"]
 sourceCompatibility = '11'
+
+graal {
+	mainClass 'net.guerra24.socialdiscord.SocialDiscord'
+	javaVersion '11'
+	outputName 'social-discord-native'
+	option '-H:EnableURLProtocols=https'
+	option '-H:ReflectionConfigurationFiles=reflect.json'
+	option '-H:IncludeResources="mozilla/public-suffix-list.txt"'
+	
+	if (OperatingSystem.current() == OperatingSystem.WINDOWS) {
+		windowsVsVarsPath("D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat")
+	}
+}
 
 repositories {
     jcenter()
@@ -14,4 +32,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation 'com.google.code.gson:gson:2.8.6'
+	implementation 'commons-logging:commons-logging:1.2'
 }

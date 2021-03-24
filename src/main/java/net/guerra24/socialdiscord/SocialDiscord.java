@@ -153,7 +153,6 @@ public class SocialDiscord {
 		post = post.replace("<br>", "\\n");
 		post = post.replace("</p>", "\\n");
 		post = post.replace("\"", "\\\"");
-		post = post.replace("*", "\\*");
 		while (true) {
 			if (post.indexOf("<") == -1)
 				break;
