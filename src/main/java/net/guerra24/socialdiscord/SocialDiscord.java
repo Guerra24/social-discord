@@ -372,6 +372,11 @@ public class SocialDiscord {
 			if (ids.stream().anyMatch(str -> str.trim().equals(postId.trim())))
 				continue;
 			processArticle(path, postId);
+			try {
+				System.out.println("Waiting for a bit");
+				Thread.sleep(25000);
+			} catch (InterruptedException e) {
+			}
 		}
 	}
 
