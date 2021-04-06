@@ -447,8 +447,8 @@ public class SocialDiscord {
 			if (!DEV)
 				saveFile();
 			try {
-				System.out.println("Waiting 5min...");
-				Thread.sleep(300000);
+				System.out.println("Waiting 10min...");
+				Thread.sleep(600000);
 			} catch (InterruptedException e) {
 			}
 		}
