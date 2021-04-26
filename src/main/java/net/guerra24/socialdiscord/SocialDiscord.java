@@ -90,6 +90,7 @@ public class SocialDiscord {
 				Element image = doc.getElementById("MPhotoContent");
 				Element imageRoot = image.child(0).child(1).child(0).child(0);
 				String imagePath = imageRoot.child(imageRoot.childNodeSize() - 1).child(0).attr("href");
+				Thread.sleep(5000);
 				return imagePath;
 			} catch (Exception e) {
 				i++;
@@ -349,6 +350,10 @@ public class SocialDiscord {
 		}
 		Element recent = doc.getElementById("recent");
 		Elements articles = recent.child(0).child(0).children();
+		if (articles == null) {
+			System.out.println("Bot Blocked");
+			return;
+		}
 		for (Element article : articles) {
 			Element inner = article.child(1).child(1);
 			if (inner.childrenSize() == 0)
@@ -361,7 +366,7 @@ public class SocialDiscord {
 			if (start == -1) {
 				try {
 					System.out.println("Waiting for post id");
-					Thread.sleep(10000);
+					Thread.sleep(30000);
 				} catch (InterruptedException e) {
 				}
 				handleHTML();
@@ -374,7 +379,7 @@ public class SocialDiscord {
 			processArticle(path, postId);
 			try {
 				System.out.println("Waiting for a bit");
-				Thread.sleep(25000);
+				Thread.sleep(61000);
 			} catch (InterruptedException e) {
 			}
 		}
@@ -447,8 +452,8 @@ public class SocialDiscord {
 			if (!DEV)
 				saveFile();
 			try {
-				System.out.println("Waiting 20min...");
-				Thread.sleep(1200000);
+				System.out.println("Waiting 30min...");
+				Thread.sleep(1800000);
 			} catch (InterruptedException e) {
 			}
 		}
