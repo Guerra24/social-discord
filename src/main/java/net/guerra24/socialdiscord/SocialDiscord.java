@@ -214,6 +214,10 @@ public class SocialDiscord {
 
 		if (path.startsWith("/story.php")) {
 			Element story = doc.getElementById("m_story_permalink_view");
+			if (story == null) {
+				System.out.println("Banned");
+				return;
+			}
 
 			if (story.child(0).child(0).child(0).childrenSize() > 2) {
 				Element imageBase = story.child(0).child(0).child(0).child(2);
@@ -306,7 +310,8 @@ public class SocialDiscord {
 			payload = "{\"embeds\": [{\"description\": \"" + post + "\",\"color\": " + color + "}";
 
 		for (String img : imagesPath)
-			payload += ",{\"color\": " + color + ",\"image\": {\"url\": \"" + img + "\"}}";
+			if (!img.isEmpty())
+				payload += ",{\"color\": " + color + ",\"image\": {\"url\": \"" + img + "\"}}";
 		payload += "]}";
 
 		try {
