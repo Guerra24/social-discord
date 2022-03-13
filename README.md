@@ -1,8 +1,8 @@
-## Social-Discord
+# Social-Discord
 
 A single file java service that scraps Facebook posts and mirrors them to Discord using webhooks... that's it. It was in *"production"* for a couple of years until FB started banning bots, after that I took it down permanently.
 
-### Features
+## Features
 
 Supports:
  - Text posts.
@@ -12,7 +12,7 @@ Supports:
 
 Everything is properly packed inside an embed. Auto splits into fields if source text is longer.
 
-### Example and how it works
+## Example and how it works
 
 ![image](https://user-images.githubusercontent.com/9023392/158050906-ebec9588-2be4-4010-9f22-fa9d2c674711.png)
 
@@ -31,7 +31,7 @@ Configuration is stored like this:
 
 `/` Is the work directory.
 
-### History
+## History
 
 I originally wrote this service to mirror Honkai Impact 3rd's Facebook feed into our armada Discord.
 
